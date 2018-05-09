@@ -146,7 +146,7 @@ def print_table():
 	s = Session()
 	query = s.query(User)
 	for q in query:
-		print q.name, q.orders, q.image
+		print(q.name, q.orders, q.image)
 	s.close()
 
 
