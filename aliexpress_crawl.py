@@ -65,7 +65,7 @@ def compare_update():
 #https://www.aliexpress.com/premium/watch.html?spm=2114.search0204.0.0.2fac57a3E0T9Ua&site=glo&groupsort=1&SearchText=watch&g=y&SortType=total_tranpro_desc&tc=ppc&initiative_id=SB_20180508225242&filterCat=200214036,200214007,200214011
 
 
-
+#add_query_to_db("https://www.aliexpress.com/premium/survival.html?spm=2114.search0204.0.0.2bfc3e2azzTv6D&site=glo&groupsort=1&SearchText=survival&g=y&SortType=total_tranpro_desc&tc=ppc&initiative_id=AS_20180509135956&filterCat=200215442,200215579,200215441", 'survival')
 
 
 

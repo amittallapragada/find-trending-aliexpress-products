@@ -120,6 +120,13 @@ def update_item(name, orders):
 		curr_item.orders = orders
 		curr_item.change = change
 		s.commit()
+	
+	elif int(curr_item.orders) > orders:
+		change = int(curr_item.change) -  orders - int(curr_item.orders)
+		curr_item.orders = orders
+		curr_item.change = change
+		s.commit()
+
 	s.close()
 
 
