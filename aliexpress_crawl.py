@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import re
 from sql import *
 #request = urllib.urlopen("https://www.aliexpress.com/w/wholesale-necklace.html?initiative_id=SB_20180508171940&site=glo&groupsort=1&SortType=total_tranpro_desc&g=y&SearchText=necklace")
-output = file('output.html').read()
 #soup = BeautifulSoup(output, 'html.parser')
 
 def add_top_ten(soup, item_type):
