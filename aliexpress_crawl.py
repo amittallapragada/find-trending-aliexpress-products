@@ -36,7 +36,7 @@ def add_top_ten(soup, item_type):
 
 def add_query_to_db(query_url, item_type):
 	request = urlopen(query_url)
-	soup = BeautifulSoup(request.read(), 'html.parser')	#chnge back request.read()
+	soup = BeautifulSoup(request, 'html.parser')	#chnge back request.read()
 	add_type(item_type, query_url)
 	add_top_ten(soup, item_type)
 
@@ -45,7 +45,7 @@ def compare_update():
 	types = return_type()
 	for t in types:
 		request = urlopen(t.query)
-		soup = BeautifulSoup(request.read(), 'html.parser')	
+		soup = BeautifulSoup(request, 'html.parser')	
 		items = soup.findAll("div", {"class": "item"})
 		items = items[:10]
 		for item in items:
@@ -66,7 +66,7 @@ def compare_update():
 
 
 
-compare_update()
+
 
 
 
