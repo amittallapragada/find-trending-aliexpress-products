@@ -1,7 +1,19 @@
-import urllib
 from bs4 import BeautifulSoup
 import re
 from sql import *
+
+import sys
+
+if sys.version_info[0] == 3:
+    from urllib.request import urlopen
+else:
+    # Not Python 3 - today, it is most likely to be Python 2
+    # But note that this might need an update when Python 4
+    # might be around one day
+    from urllib import urlopen
+
+
+
 #request = urllib.urlopen("https://www.aliexpress.com/w/wholesale-necklace.html?initiative_id=SB_20180508171940&site=glo&groupsort=1&SortType=total_tranpro_desc&g=y&SearchText=necklace")
 #soup = BeautifulSoup(output, 'html.parser')
 
@@ -55,7 +67,7 @@ def compare_update():
 
 
 
-
+compare_update()
 
 
 
