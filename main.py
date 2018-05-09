@@ -25,3 +25,4 @@ def update():
 	compare_update()
 	return "finished updating"
 
+app.run()

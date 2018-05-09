@@ -1,6 +1,7 @@
 from sqlalchemy import *
 from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy import Column, Date, Integer, String
+from sqlalchemy import update
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker
@@ -113,15 +114,16 @@ def update_item(name, orders):
 	Session = sessionmaker(bind=conn)
 	s = Session()
 	change = 0
-	curr_item = find_item(name)
-	if curr_item.orders < orders:
-		change = curr_item.change +  orders - curr_item.orders
+	curr_item = s.query(User).filter(User.name.in_([name])).first()
+	if int(curr_item.orders) < orders:
+		change = int(curr_item.change) +  orders - int(curr_item.orders)
 		curr_item.orders = orders
+		curr_item.change = change
 		s.commit()
-
 	s.close()
 
-	return change
+
+
 
 
 #delete item based on name
@@ -148,6 +150,7 @@ def print_table():
 	for q in query:
 		print(q.name, q.orders, q.image)
 	s.close()
+
 
 
 def return_table():

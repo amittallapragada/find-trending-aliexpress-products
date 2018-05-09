@@ -32,7 +32,7 @@ def add_query_to_db(query_url, item_type):
 #tries to find the product and finds difference in sales
 def compare_update():
 	types = return_type()
-
+	print types
 	for t in types:
 		request = urllib.urlopen(t.query)
 		soup = BeautifulSoup(request.read(), 'html.parser')	
@@ -46,16 +46,13 @@ def compare_update():
 			orders = regex.search(item.find(class_="order-num-a ").find("em").text)
 			orders = int(orders.group())
 			if find_item(name) == None:
-				add_item(name, orders, image, t.name)
+				add_item(name, orders, image, t.name, 0)
 			else:
+				print "IN UPDATE ITEM"
 				update_item(name,orders)
 
 
-
-
 #add_query_to_db("https://www.aliexpress.com/w/wholesale-necklace.html?initiative_id=SB_20180508171940&site=glo&groupsort=1&SortType=total_tranpro_desc&g=y&SearchText=necklace")
-
-#watches
 #https://www.aliexpress.com/premium/watch.html?spm=2114.search0204.0.0.2fac57a3E0T9Ua&site=glo&groupsort=1&SearchText=watch&g=y&SortType=total_tranpro_desc&tc=ppc&initiative_id=SB_20180508225242&filterCat=200214036,200214007,200214011
 
 
