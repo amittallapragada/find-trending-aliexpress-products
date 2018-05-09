@@ -32,7 +32,6 @@ def add_query_to_db(query_url, item_type):
 #tries to find the product and finds difference in sales
 def compare_update():
 	types = return_type()
-	print types
 	for t in types:
 		request = urllib.urlopen(t.query)
 		soup = BeautifulSoup(request.read(), 'html.parser')	
@@ -48,7 +47,6 @@ def compare_update():
 			if find_item(name) == None:
 				add_item(name, orders, image, t.name, 0)
 			else:
-				print "IN UPDATE ITEM"
 				update_item(name,orders)
 
 
