@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import re
 from sql import *
-
 import sys
 
 if sys.version_info[0] == 3:
@@ -36,7 +35,7 @@ def add_top_ten(soup, item_type):
 
 
 def add_query_to_db(query_url, item_type):
-	request = urllib.urlopen(query_url)
+	request = urlopen(query_url)
 	soup = BeautifulSoup(request.read(), 'html.parser')	#chnge back request.read()
 	add_type(item_type, query_url)
 	add_top_ten(soup, item_type)
@@ -45,7 +44,7 @@ def add_query_to_db(query_url, item_type):
 def compare_update():
 	types = return_type()
 	for t in types:
-		request = urllib.urlopen(t.query)
+		request = urlopen(t.query)
 		soup = BeautifulSoup(request.read(), 'html.parser')	
 		items = soup.findAll("div", {"class": "item"})
 		items = items[:10]
