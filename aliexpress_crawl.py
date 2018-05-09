@@ -15,7 +15,6 @@ def add_top_ten(soup, item_type):
 		image = item.find(class_="pic").find("a").find(class_="picCore").get('src')
 		if image is None:
 			image = item.find(class_="pic").find("a").find(class_="picCore").get('image-src')
-		print image
 
 		regex = re.compile(r'((\d)+)')
 		orders = regex.search(item.find(class_="order-num-a ").find("em").text)
