@@ -175,4 +175,3 @@ def return_table():
 	return output
 
 
-drop_table()
