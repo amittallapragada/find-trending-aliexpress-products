@@ -122,7 +122,7 @@ def update_item(name, orders):
 		s.commit()
 	
 	elif int(curr_item.orders) > orders:
-		change = int(curr_item.change) -  orders - int(curr_item.orders)
+		change = int(curr_item.change) -  int(curr_item.orders) - orders 
 		curr_item.orders = orders
 		curr_item.change = change
 		s.commit()
@@ -149,7 +149,6 @@ def drop_table():
 
 
 def print_table():
-
 	conn = engine.connect()
 	Session = sessionmaker(bind=conn)
 	s = Session()
@@ -174,3 +173,6 @@ def return_table():
 		else:
 			output[str(q.item_type)].append([str(q.item_type), str(q.name), str(q.orders), str(q.change), str(q.image)])
 	return output
+
+
+drop_table()

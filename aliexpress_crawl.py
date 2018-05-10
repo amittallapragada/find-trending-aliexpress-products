@@ -6,9 +6,6 @@ import sys
 if sys.version_info[0] == 3:
     from urllib.request import urlopen
 else:
-    # Not Python 3 - today, it is most likely to be Python 2
-    # But note that this might need an update when Python 4
-    # might be around one day
     from urllib import urlopen
 
 
@@ -60,7 +57,7 @@ def compare_update():
 			else:
 				update_item(name,orders)
 
-
+compare_update()
 #add_query_to_db("https://www.aliexpress.com/w/wholesale-necklace.html?initiative_id=SB_20180508171940&site=glo&groupsort=1&SortType=total_tranpro_desc&g=y&SearchText=necklace")
 #https://www.aliexpress.com/premium/watch.html?spm=2114.search0204.0.0.2fac57a3E0T9Ua&site=glo&groupsort=1&SearchText=watch&g=y&SortType=total_tranpro_desc&tc=ppc&initiative_id=SB_20180508225242&filterCat=200214036,200214007,200214011
 
