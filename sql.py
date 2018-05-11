@@ -5,8 +5,6 @@ from sqlalchemy import update
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker
-engine = create_engine('postgresql://agwykgupcennfj:c10586d790dcdbf040aedcd2c21d2493829d59f0064664adcf4df0164c40aa56@ec2-23-23-248-192.compute-1.amazonaws.com:5432/davdopmbiql8po', pool_recycle = 280)
-
 
 Base = declarative_base()
 
@@ -49,129 +47,155 @@ class types(Base):
 
 #Base.metadata.create_all(engine)
 
-#add to type table
-def add_type(name, url):
 
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	#create item
-	new_item = types(name,url)
-	#add item
-	s.add(new_item)
-	#commit to db
-	s.commit()
-	#close connections
-	s.close()
+class db_utilities():
+	def __init__(self):
+		self.engine = create_engine('postgresql://agwykgupcennfj:c10586d790dcdbf040aedcd2c21d2493829d59f0064664adcf4df0164c40aa56@ec2-23-23-248-192.compute-1.amazonaws.com:5432/davdopmbiql8po', pool_size = 20, pool_recycle = 280)
 
-
-def return_type():
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	query = s.query(types)
-	#close connections
-	s.close()
-
-	return query
-
-
-
-
-#adds item
-def add_item(name, orders, image, item_type, change):
-
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	#create item
-	new_item = User(name,orders,image, item_type, change)
-	#add item
-	s.add(new_item)
-	#commit to db
-	s.commit()
-	#close connections
-	s.close()
-
-
-
-#finds item based on name
-def find_item(name):
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	query = s.query(User).filter(User.name.in_([name]))	
-	result = query.first()
-	s.close()
-	conn.close()
-	return result
-
-
-#update row
-def update_item(name, orders):
-
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	change = 0
-	curr_item = s.query(User).filter(User.name.in_([name])).first()
-	if int(curr_item.orders) < orders:
-		change = int(curr_item.change) +  orders - int(curr_item.orders)
-		curr_item.orders = orders
-		curr_item.change = change
+	#add to type table
+	def add_type(self, name, url):
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		#create item
+		new_item = types(name,url)
+		#add item
+		s.add(new_item)
+		#commit to db
 		s.commit()
-	
-	elif int(curr_item.orders) > orders:
-		change = int(curr_item.change) -  int(curr_item.orders) - orders 
-		curr_item.orders = orders
-		curr_item.change = change
+		#close session
+		s.close()
+		#close connection
+		conn.close()
+
+
+
+	def return_type(self):
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		output = []
+		query = s.query(types)
+		for q in query:
+			output.append(q)
+		#close connections
+		s.close()
+		conn.close()
+		return output
+
+
+
+
+	#adds item
+	def add_item(self,name, orders, image, item_type, change):
+
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		#create item
+		new_item = User(name,orders,image, item_type, change)
+		#add item
+		s.add(new_item)
+		#commit to db
 		s.commit()
-
-	s.close()
-
-
-
-
-
-#delete item based on name
-def delete_item(name):
-
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	product = find_item(name)
-	s.delete(product)
-	s.commit()
-	s.close()
-
-def drop_table():
-	User.__table__.drop(engine)
-
-
-def print_table():
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	query = s.query(User)
-	for q in query:
-		print(q.name, q.orders, q.image)
-	s.close()
+		#close connections
+		s.close()
+		conn.close()
 
 
 
-def return_table():
+	#finds item based on name
+	def find_item(self,name):
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		query = s.query(User).filter(User.name.in_([name]))	
+		result = query.first()
+		s.close()
+		conn.close()
+		return result
 
-	conn = engine.connect()
-	Session = sessionmaker(bind=conn)
-	s = Session()
-	query = s.query(User)
-	s.close()
-	output = {}
-	for q in query:
-		if str(q.item_type) not in output:
-			output[str(q.item_type)] = [[str(q.item_type), str(q.name), str(q.orders), str(q.change), str(q.image)]]
-		else:
-			output[str(q.item_type)].append([str(q.item_type), str(q.name), str(q.orders), str(q.change), str(q.image)])
-	return output
+
+	#update row
+	def update_item(self,name, orders):
+
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		change = 0
+		curr_item = s.query(User).filter(User.name.in_([name])).first()
+		if int(curr_item.orders) < orders:
+			change = int(curr_item.change) +  orders - int(curr_item.orders)
+			curr_item.orders = orders
+			curr_item.change = change
+			s.commit()
+		
+		elif int(curr_item.orders) > orders:
+			change = int(curr_item.change) -  (int(curr_item.orders) - orders) 
+			curr_item.orders = orders
+			curr_item.change = change
+			s.commit()
+		s.close()
+		conn.close()
+
+
+	#delete item based on name
+	def delete_item(self,name):
+
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		product = find_item(name)
+		s.delete(product)
+		s.commit()
+		s.close()
+		conn.close()
+
+	def drop_table(self):
+		User.__table__.drop(self.engine)
+
+
+	def print_table(self):
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		query = s.query(User)
+		for q in query:
+			print(q.name, q.orders, q.image)
+		s.close()
+		conn.close()
+
+
+
+	def return_table(self):
+
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		query = s.query(User)
+		output = {}
+		for q in query:
+			if str(q.item_type) not in output:
+				output[str(q.item_type)] = [[str(q.item_type), str(q.name), str(q.orders), str(q.change), str(q.image)]]
+			else:
+				output[str(q.item_type)].append([str(q.item_type), str(q.name), str(q.orders), str(q.change), str(q.image)])
+		s.close()
+		conn.close()
+		return output
+
+
+	def temp(self):
+		conn = self.engine.connect()
+		Session = sessionmaker(bind=conn)
+		s = Session()
+		query = s.query(User)
+		for q in query:
+			if q.change < 0:
+				q.change = 0
+
+		s.commit()
+		s.close()
+		conn.close()
+
 
 
