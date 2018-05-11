@@ -3,7 +3,6 @@ from flask import Flask, flash, redirect, render_template, request, session, abo
 from sqlalchemy.orm import sessionmaker
 from sql import *
 from aliexpress_crawl import *
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
