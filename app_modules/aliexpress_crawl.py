@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
-from sql import *
+#from sql import *
+from app_modules.sql import db_utilities
 import sys
 #still liek python 2 :(
 if sys.version_info[0] == 3:
