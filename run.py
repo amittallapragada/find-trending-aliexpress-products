@@ -35,4 +35,4 @@ def update():
 	return "finished updating"
 
 #uncomment this to run locally
-app.run()
+#app.run()
