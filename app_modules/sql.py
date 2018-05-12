@@ -5,7 +5,7 @@ from sqlalchemy import update
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker
-
+from config import *
 Base = declarative_base()
 
 #creates a product
@@ -50,7 +50,7 @@ class types(Base):
 
 class db_utilities():
 	def __init__(self):
-		self.engine = create_engine('postgresql://agwykgupcennfj:c10586d790dcdbf040aedcd2c21d2493829d59f0064664adcf4df0164c40aa56@ec2-23-23-248-192.compute-1.amazonaws.com:5432/davdopmbiql8po', pool_size = 20, pool_recycle = 280)
+		self.engine = create_engine(heroku_engine, pool_size = 20, pool_recycle = 280)
 
 	#add to type table
 	def add_type(self, name, url):

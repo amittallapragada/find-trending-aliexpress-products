@@ -62,6 +62,10 @@ class aliexpress():
 
 
 
+test = aliexpress()
+test.compare_update()
+
+
 
 
 ##tests##
