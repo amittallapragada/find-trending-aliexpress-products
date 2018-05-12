@@ -5,7 +5,7 @@ from sqlalchemy import update
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker
-from config import *
+from app_modules.config.db_config import *
 Base = declarative_base()
 
 #creates a product

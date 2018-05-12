@@ -1,0 +1,1 @@
+heroku_engine = 'postgresql://agwykgupcennfj:c10586d790dcdbf040aedcd2c21d2493829d59f0064664adcf4df0164c40aa56@ec2-23-23-248-192.compute-1.amazonaws.com:5432/davdopmbiql8po'
